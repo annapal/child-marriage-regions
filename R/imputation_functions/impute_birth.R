@@ -1,4 +1,6 @@
 
+# Impute the month and year of birth (where needed)
+
 impute_birth <- function(data, birth_vect) {
 
   # Impute birth CMC by randomly sampling from vector
@@ -9,7 +11,10 @@ impute_birth <- function(data, birth_vect) {
   data$birth_y_imp <- cmc_y(data$birth_cmc_imp)
   data$birth_m_imp <- cmc_m(data$birth_cmc_imp)
   
-  # SENSE CHECKS ----------------------------------------------
+  # SENSE CHECKS
+  
+  # Create directory
+  dir.create("data/mics/imputation_checks", showWarnings = FALSE)
   
   # Save sense check output in text file
   survey_id <- data$surveyid[1]
@@ -43,7 +48,7 @@ impute_birth <- function(data, birth_vect) {
   
   sink()
   
-  # APPLY IMPUTED DATES OF BIRTH --------------------------------------------
+  # APPLY IMPUTED DATES OF BIRTH
   
   # Replace with imputed values
   data$birth_m <- data$birth_m_imp
@@ -53,5 +58,6 @@ impute_birth <- function(data, birth_vect) {
   # Note that this won't be the same as reported age in all cases (due to rounding)
   data$age <- data$age_imp
   
+  # Return the dataframe
   data
 }

@@ -1,7 +1,10 @@
 
+# Create a list of vectors showing plausible dates for marriage and birth
+# Based on final ranges produced
+
 create_vectors <- function(data) {
   
-  # CREATE BIRTH VECTORS ------------------------------------------------------
+  # CREATE BIRTH VECTORS
 
   # Create a list of vectors that have plausible CMCs for DOB
   birth_vect <- list()
@@ -19,7 +22,7 @@ create_vectors <- function(data) {
     }
   }
   
-  # CREATE MARRIAGE VECTORS ------------------------------------------------------
+  # CREATE MARRIAGE VECTORS
   
   # Create a list of vectors that have plausible CMCs for DOM
   mar_vect <- list()
@@ -37,6 +40,6 @@ create_vectors <- function(data) {
     }
   }
   
+  # Return the vectors of possible values
   list(birth_vect=birth_vect, mar_vect=mar_vect)
-  
 }

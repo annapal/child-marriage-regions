@@ -1,9 +1,9 @@
 
-min_interval_backward <- function(data) {
-  
-  # Ensure that there is min 10 years between birth and marriage (backward)
+# Ensure that there is min 10 years between birth and marriage (backward)
 
-  # Compute lower cmc
+min_interval_backward <- function(data) {
+
+  # Compute lower bound
   data <- data %>%
     mutate(S3LB_birth = 
              case_when(
@@ -13,7 +13,7 @@ min_interval_backward <- function(data) {
                TRUE ~ S5LB_mar_c - 50*12
              ))
   
-  # Compute upper cmc
+  # Compute upper bound
   data <- data %>%
     mutate(S3UB_birth = 
              case_when(
@@ -49,7 +49,7 @@ min_interval_backward <- function(data) {
            mar_cmc_lb = S5LB_mar_c,
            mar_cmc_ub = S5UB_mar_c)
   
+  # Return data and number of inconsistent observations
   list(data = data, flag = flag)
-  
 }
 

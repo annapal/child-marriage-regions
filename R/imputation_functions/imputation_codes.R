@@ -1,7 +1,7 @@
 
+# Add same imputation codes as used in DHS
+
 imputation_codes <- function(data) {
-  
-  # Add same imputation codes as using in DHS
 
   # Codes for date of birth "missingness"
   data$birth_imp <- NA
@@ -24,7 +24,6 @@ imputation_codes <- function(data) {
                is.na(birth_m) & is.na(birth_y) & is.na(age) ~ 8,
                TRUE ~ NA
              ))
-  
   
   # Codes for date of marriage "missingness"
   data$mar_imp <- NA
@@ -49,5 +48,7 @@ imputation_codes <- function(data) {
                is.na(mar_m) & is.na(mar_y) & is.na(mar_age) ~ 8,
                TRUE ~ NA
              ))
+  
+  # Return the dataframe
   data
 }

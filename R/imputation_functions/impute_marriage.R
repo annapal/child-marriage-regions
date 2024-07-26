@@ -1,4 +1,6 @@
 
+# Impute the month and year of marriage (where needed)
+
 impute_marriage <- function(data, mar_vect) {
   
   # For observations where age of marriage is reported, remove CMCs that correspond to other ages
@@ -22,8 +24,12 @@ impute_marriage <- function(data, mar_vect) {
   data$mar_y_imp <- cmc_y(data$mar_cmc_imp)
   data$mar_m_imp <- cmc_m(data$mar_cmc_imp)
   
-  # SENSE CHECKS ----------------------------------------------
+  # SENSE CHECKS
   
+  # Create directory
+  dir.create("data/mics/imputation_checks", showWarnings = FALSE)
+  
+  # Save sense check output in text file
   survey_id <- data$surveyid[1]
   text_file <- paste0("data/mics/imputation_checks/", survey_id, "_imp_check.txt")
   cat("Marriage Imputation \n",
@@ -57,7 +63,7 @@ impute_marriage <- function(data, mar_vect) {
                sum(!(data[obs, "mar_m_imp"]==data[obs,"birth_m"])), " obs \n"),
         file = text_file, append = TRUE)
   
-  # APPLY IMPUTED DATES OF MARIAGE --------------------------------------------
+  # APPLY IMPUTED DATES OF MARIAGE
   
   # Replace with imputed values
   data$mar_m <- data$mar_m_imp
@@ -75,6 +81,7 @@ impute_marriage <- function(data, mar_vect) {
       mar_age = ifelse(mar_status == "never" | is.na(mar_status), NA, mar_age)
     )
   
+  # Return the dataframe
   data
 }
 

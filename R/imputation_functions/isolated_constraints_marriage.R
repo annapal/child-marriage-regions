@@ -1,9 +1,9 @@
 
+# Constrain marriage dates so they make sense with reported marriage age
+
 isolated_constraints_marriage <- function(data) {
   
-  # Constrain marraige dates so they make sense with reported marriage age
-  
-  # Compute lower cmc
+  # Compute lower bound
   data <- data %>%
     mutate(S2LB_mar = 
              case_when(
@@ -13,7 +13,7 @@ isolated_constraints_marriage <- function(data) {
                TRUE ~ S1LB_mar
              ))
   
-  # Compute upper cmc
+  # Compute upper bound
   data <- data %>%
     mutate(S2UB_mar = 
              case_when(
@@ -36,7 +36,7 @@ isolated_constraints_marriage <- function(data) {
   data <- data %>%
     mutate(mar_age = if_else(data$S2RG_mar_c<0, NA, mar_age))
   
+  # Return data and number of observations with inconsistent marriage age
   list(data = data, flag = flag)
-  
 }
 

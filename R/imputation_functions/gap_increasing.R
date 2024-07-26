@@ -2,6 +2,8 @@
 gap_increasing <- function(data) {
   
   # Increase gap between birth and marriage
+  # I.e. make sure that the upper bound for birth is lower than the lower bound for marriage
+  # If there is an overlap, subtract half of the overlap from the DOB ub and add half to the DOM lb
   
   # Calculate gap
   data <- data %>%
@@ -30,5 +32,6 @@ gap_increasing <- function(data) {
       mar_cmc_ub = ceiling(mar_cmc_ub)
     )
   
+  # Return the data
   data
 }

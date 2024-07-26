@@ -1,7 +1,7 @@
 .Rproj.user
 .Rhistory
-.RData
 .Ruserdata
 .DS_Store
-data/mics/data_dictionaries/*
-data/mics/raw_data/*
+data/mics/*
+data/dhs/*
+rdhs.json

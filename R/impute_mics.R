@@ -34,7 +34,7 @@ impute_mics <- function(data) {
   # Increase gap between birth and marriage
   data <- gap_increasing(data_flg$data)
   
-  # Create vectors of possible values
+  # Create vectors of possible date values
   vect <- create_vectors(data)
   
   # Add imputation codes

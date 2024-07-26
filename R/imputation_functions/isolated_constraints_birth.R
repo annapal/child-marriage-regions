@@ -1,9 +1,9 @@
 
+# Constrain birth dates so they make sense with reported age
+
 isolated_constraints_birth <- function(data) {
   
-  # Constrain birth dates so they make sense with reported age
-  
-  # Compute lower cmc
+  # Compute lower bound
   data <- data %>%
     mutate(S2LB_birth = 
              case_when(
@@ -13,7 +13,7 @@ isolated_constraints_birth <- function(data) {
                TRUE ~ S1LB_birth
              ))
   
-  # Compute upper cmc
+  # Compute upper bound
   data <- data %>%
     mutate(S2UB_birth = 
              case_when(
@@ -36,6 +36,6 @@ isolated_constraints_birth <- function(data) {
   data <- data %>%
     mutate(age = if_else(data$S2RG_birth_c<0, NA, age))
   
+  # Return data and number of observations with inconsistent age
   list(data = data, flag = flag)
-  
 }

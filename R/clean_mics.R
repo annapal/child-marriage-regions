@@ -14,7 +14,7 @@ clean_mics <- function(surveys="all") {
   # Spreadsheet listing variable names for clean dataset
   survey_var <- read_excel("data/ref_data/analysis-variables.xlsx")
   
-  # Create directories
+  # Create directory
   dir.create("data/mics/data_dictionaries", showWarnings = FALSE)
   
   # Empty list to store the data frames

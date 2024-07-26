@@ -1,13 +1,13 @@
 
+# Restrict dates of marriage so they make sense with survey dates
+
 logical_ranges_marriage <- function(data) {
-  
-  # Restrict dates of marraige so they make sense with survey dates
   
   # Min and max marriage dates (based on survey age range)
   data$max_mar <- data$int_cmc
-  data$min_mar <- data$int_cmc-40*12
+  data$min_mar <- data$int_cmc-40*12 # Marriage had to occur at a min of 10 years
   
-  # Compute lower cmc
+  # Compute lower bound
   data <- data %>%
     mutate(S1LB_mar = 
              case_when(
@@ -24,7 +24,7 @@ logical_ranges_marriage <- function(data) {
                TRUE ~ NA
              ))
   
-  # Compute upper cmc
+  # Compute upper bound
   data <- data %>%
     mutate(S1UB_mar = 
              case_when(
@@ -49,7 +49,7 @@ logical_ranges_marriage <- function(data) {
     mutate(mar_m = if_else(S1LB_mar < min_mar | S1UB_mar > max_mar, NA, mar_m),
            mar_y = if_else(S1LB_mar < min_mar | S1UB_mar > max_mar, NA, mar_y))
   
+  # Return data and number of observations with inconsistent marriage month/year
   list(data = data, flag = flag)
-  
 }
 

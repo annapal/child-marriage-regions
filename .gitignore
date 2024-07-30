@@ -4,4 +4,6 @@
 .DS_Store
 data/mics/*
 data/dhs/*
+data/gadm/*
+data/merged/*
 rdhs.json

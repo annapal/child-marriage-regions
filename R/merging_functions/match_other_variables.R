@@ -1,7 +1,7 @@
 
+# Match previous region of residence reported in survey
+
 match_other_variables <- function(data, merge_dat) {
-  
-  # Match other variables reported in survey
   
   # Previous Region (Reg)
   if (!is.na(merge_dat$Prev_Reg_match[1])) {
@@ -27,21 +27,6 @@ match_other_variables <- function(data, merge_dat) {
     data$Prev_Adm2 <- NA
   }
   
-  # Religion
-  if (!is.na(merge_dat$Religion_match[1])) {
-    data <- merge(data, na.omit(merge_dat[,c("Religion", "Religion_match")]), 
-                  by.x = "relig", by.y = "Religion_match", all.x = TRUE)
-  } else {
-    data$Religion <- NA
-  }
-  
-  # Ethnicity
-  if (!is.na(merge_dat$Ethnicity_match[1])) {
-    data <- merge(data, na.omit(merge_dat[,c("Ethnicity", "Ethnicity_match")]), 
-                  by.x = "ethn", by.y = "Ethnicity_match", all.x = TRUE)
-  } else {
-    data$Ethnicity <- NA
-  }
-  
+  # Return dataframe with matches
   data
 }

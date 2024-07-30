@@ -46,11 +46,11 @@ merge_data <- function(dhs_data, mics_data_imp) {
         data <- get_reg_from_data(data, merge_dat)
       }
       
-      # Match other variables
+      # Match other variables (i.e. previous region of residence)
       data <- match_other_variables(data, merge_dat)
       
       # Add denormalised weights and unique PSU/Strata variables
-      pop_data <- read.csv("ref_data/pop_year.csv") # Data on population sizes
+      pop_data <- read.csv("data/ref_data/pop_year.csv") # Data on population sizes
       data <- denorm_weights(data, pop_data, iso=iso3)
       
       # Add data to data list
@@ -64,6 +64,7 @@ merge_data <- function(dhs_data, mics_data_imp) {
     merged_data[[iso3]] <- all_data
   
     # Save a copy of the merged dataset
+    dir.create("data/merged/country_data", showWarnings = FALSE, recursive = TRUE)
     saveRDS(all_data, file=paste0("data/merged/country_data/", iso3, ".rds"))
   }
   

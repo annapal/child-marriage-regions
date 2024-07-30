@@ -4,7 +4,7 @@ source("./packages.R")
 ## Load R files
 lapply(list.files("./R", full.names = TRUE, recursive = TRUE), source)
 
-# Configuration for accessing DHS data using rdhs
+# Config for accessing DHS data using rdhs package
 # You will need to add your own credentials to access the data
 config <- set_rdhs_config(
   email = "anna.palmer@mail.mcgill.ca",
@@ -16,23 +16,21 @@ config <- set_rdhs_config(
 # pipeline ----------------------------------------------------------------
 
 # Clean MICS surveys
-mics_data = clean_mics(surveys = "all")
+mics_data = clean_mics()
 
 # Impute MICS data
 mics_data_imp = pblapply(mics_data, impute_mics)
-save(mics_data_imp, file = "data/mics/clean_data_mics.RData")
 
-# Clean DHS
+# Download and clean DHS surveys
 dhs_data <- clean_dhs(surveys="all", download=TRUE, config)
-save(dhs_data, file = "data/dhs/clean_data_dhs.RData")
 
-# Merge datasets
+# Merge datasets for each country
 merged_data <- merge_data(dhs_data, mics_data_imp)
-save(merged_data, file = "data/merged/clean_data_merged.RData")
+save(merged_data, file = "data/clean_data_merged.RData")
 
 # Create long datasets
 long_data <- create_long_data(merged_data)
-save(long_data, file = "data/merged/clean_data_long.RData")
+save(long_data, file = "data/clean_data_long.RData")
 
 
 

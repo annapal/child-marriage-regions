@@ -3,13 +3,12 @@
 # `surveys` is a vector with survey ids or can be specified as "all"
 # If surveys=="all", then all available DHS surveys are cleaned
 # If download=TRUE, then DHS surveys are downloaded using package rdhs
-# This will need to be done if surveys are not already downloaded
 # config is the object created from set_rdhs_config() needed to access the DHS data 
 
 clean_dhs <- function(surveys="all", download=TRUE, config=NA) {
   
   if (length(surveys)==1 & surveys=="all") {
-    # Get all DHS survey ids
+    # Get all DHS survey ids that are to be included
     dhs_surveys <- read_excel("data/ref_data/dhs_surveys.xlsx") %>%
       filter(Include=="Yes")
     surveys <- dhs_surveys$SurveyId
@@ -43,10 +42,6 @@ clean_dhs <- function(surveys="all", download=TRUE, config=NA) {
     # Create clean dataset
     cleandat <- clean_dhs_data(survey_id, data, geodata, survey_var)
     data_list[[surveys[i]]] <- cleandat # save clean data to list
-    
-    # Save a copy of the clean data to data folder
-    dir.create("data/dhs/clean_data", showWarnings = FALSE)
-    saveRDS(cleandat, file=paste0("data/dhs/clean_data/", survey_id, ".rds"))
     
     setTxtProgressBar(pb,i) # update progress bar
   }

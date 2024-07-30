@@ -24,7 +24,7 @@ clean_mics <- function(surveys="all") {
   pb = txtProgressBar(min = 0, max = length(surveys), initial = 0, style = 3) 
   
   for (i in 1:length(surveys)) {
-    # Get name of file that contains the cleaning function for specific survey
+    # Get name of function for cleaning specific survey
     function_name <- paste("clean_", surveys[i], sep = "")
     
     # Run the function if it exists and save to data list

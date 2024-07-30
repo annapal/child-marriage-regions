@@ -1,6 +1,6 @@
 
 # Function that imputes missing date information in MICS surveys
-# `data` is a MICS dataframe that has ungone initial cleaning
+# `data` is a MICS data frame that has undergone initial cleaning
 
 impute_mics <- function(data) {
 
@@ -8,7 +8,7 @@ impute_mics <- function(data) {
   data <- data_edits(data)
   
   # Calculate plausible ranges for date of birth and first marriage
-  # `flag` shows the number of values removed at each step
+  # `flag` is the number of values removed at each step
   # If any observations are removed, the process restarts
   data_flg <- list(data=data, flag=1)
   while(data_flg$flag>0) {

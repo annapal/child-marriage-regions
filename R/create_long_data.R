@@ -50,9 +50,7 @@ create_long_data <- function(merged_data) {
       # Remove any observations with 0 wt
       filter(wt!=0)
     
-    # Save long data
-    dir.create("data/merged/long_data", showWarnings = FALSE)
-    saveRDS(final_data, file=paste0("data/merged/long_data/", iso, ".rds"))
+    # Add data to list
     dat_list[[iso]] <- final_data
   }
   

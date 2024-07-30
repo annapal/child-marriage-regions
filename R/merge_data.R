@@ -62,10 +62,6 @@ merge_data <- function(dhs_data, mics_data_imp) {
     
     # Add data to list
     merged_data[[iso3]] <- all_data
-  
-    # Save a copy of the merged dataset
-    dir.create("data/merged/country_data", showWarnings = FALSE, recursive = TRUE)
-    saveRDS(all_data, file=paste0("data/merged/country_data/", iso3, ".rds"))
   }
   
   # Return list of merged data

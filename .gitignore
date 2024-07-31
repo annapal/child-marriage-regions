@@ -2,6 +2,7 @@
 .Rhistory
 .Ruserdata
 .DS_Store
+*.Rdata
 data/mics/*
 data/dhs/*
 data/gadm/*

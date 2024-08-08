@@ -1,17 +1,36 @@
 # Child Marriage Regions
-This repo collates and cleans child marriage data across DHS and MICS surveys (available as of October 2023). One dataset is produced for each country, which pools all available surveys for that country.
+This repo collates and cleans child marriage data across DHS and MICS surveys (available as of October 2023). Two datasets are produced for each country (one wide and one long), pooling all available surveys for that country.
 Where possible, the data has been linked to geographic administrative boundaries listed in the Global Administrative Areas Database (https://gadm.org/) at the first and second administrative division.
 
 The code was developed to clean data for the following papers:
-
+- paper1
 
 ## Code organisation
-- `child-marriage-regions.Rproj` is the project file. Open this file first to make sure you have the correct working directory.
-- `_run.R` is the main script that runs the entire analysis. This is the only script that needs to be run in order to produce the clean datasets. This script performs the following:
-- 
+- `child-marriage-regions.Rproj` is the project file.
+- `_run.R` is the main script that runs the entire analysis. *This is the only script that needs to be run by the user*. The functions called in this script perform the following:
+  - `clean_mics()` opens MICS survey data and relabels variables in a consistent way.
+  - `impute_mics()` imputes missing birth and marriage dates in the MICS data. This is done using similar methodology as the DHS: https://dhsprogram.com/pubs/pdf/DHSG3/DHS_Data_Editing.pdf.
+  - `clean_dhs()` downloads the DHS data (and geocodes) and relabels variables in a consistent way.
+  - `merge_data()`
+      - Uses sub-national region of residence, or available geocodes, to link surveys to the GADM at the Adm1 & Adm2 level (where applicable).
+      - Denormalises survey weights and creates unique PSU and strata variables across surveys.
+      - Pools all DHS and MICS surveys for a country into one dataset.
+  - `create_long_data()`
+      - Converts the pooled dataset into long format, where each row represents a person-year between the ages of 13 and 17, where the person was unmarried at the start of that year.
+      - Removes women interviewed at young ages within ever-married samples (to avoid bias when calculating the rate of child marriage)
 - The directory `R` contains the functions that support the `_run.R` file
-- The directory `data` contains the raw MICS and DHS survey files, workbooks needed to match region names to the GADM, and reference spreadsheets needed to clean the data.
+- The directory `data` contains the raw MICS and DHS survey files and other reference data. Specifically:
+  - `data/ref_data/analysis-variables.xlsx` is a data dictionary showing the consistent variable names in the clean dataset
+  - `data/ref_data/country-codes.xlsx` contains country names and codes for all included countries
+  - `data/ref_data/dhs_surveys.xlsx` contains a list of DHS surveys included
+  - `data/ref_data/min_mar_age.csv` contains data on the average age at which 95% of the population is married (needed to remove observations in "ever-married" samples), downloaded from *World Marriage Data* https://population.un.org/MarriageData/Index.html#/home.
+  - `data/ref_data/pop_year.csv` contains data on the population of women aged 15-49 years (needed to denormalise survey weights), downloaded from *World Population Prospects* https://population.un.org/wpp/.
+  - `data/wbs` contains a workbook for each country which helps to match region names to the GADM in each survey.
 
+## Outputs
+After running the code, there should be two main sets of outputs:
+- `data/wide_data` contains cleaned pooled country data files. There is one rds file for each country.
+- `data/long_data` contains cleaned long data files. There is one file for rds each country.
 
 ## Instructions for reproducing the data
 Running the code requires some management by the user. DHS and MICS raw data files are not uploaded. You will need to request permission to access these data at https://dhsprogram.com/ and https://mics.unicef.org/surveys. 
@@ -30,3 +49,5 @@ To reproduce the clean data, perform the following steps:
 5. Open the `packages.R` file and make sure that all packages have been installed. The package `DHSmortality` may need to be installed manually. Refer to https://rdrr.io/github/hesohn/DHSmortality/ for installation.
 
 6. Source the `_run.R` file.
+
+Please direct questions/comments/issues to anna.palmer@mail.mcgill.ca.

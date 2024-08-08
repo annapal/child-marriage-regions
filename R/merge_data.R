@@ -8,8 +8,10 @@ merge_data <- function(dhs_data, mics_data_imp) {
   # Get list of countries that have data
   country_cdes <- read_excel("data/ref_data/country-codes.xlsx")
   
-  # Create list to store merged dataframes
-  merged_data <- list()
+  # Create directory for merged dataframes
+  if (!dir.exists("data/wide_data")){
+    dir.create("data/wide_data")
+  }
   
   # Merge all datasets
   for (i in 1:nrow(country_cdes)) {
@@ -60,10 +62,7 @@ merge_data <- function(dhs_data, mics_data_imp) {
     # Merge all datasets for a particular country
     all_data <- suppressMessages(Reduce(full_join, dat_list))
     
-    # Add data to list
-    merged_data[[iso3]] <- all_data
+    # Save merged data
+    saveRDS(all_data, file=paste0("data/wide_data/", iso3, ".rds"))
   }
-  
-  # Return list of merged data
-  merged_data
 }

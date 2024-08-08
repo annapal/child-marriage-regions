@@ -3,13 +3,19 @@
 # I.e. create an entry for each person-year at risk of child marriage
 # Includes calendar years in which a girl turned 13-17
 
-create_long_data <- function(merged_data) {
+create_long_data <- function() {
   
-  dat_list <- list() # Create list to store dataframes
+  # Get list of countries that have data
+  country_cdes <- read_excel("data/ref_data/country-codes.xlsx")
   
-  for (iso in names(merged_data)) {
+  # Create directory for long dataframes
+  if (!dir.exists("data/long_data")){
+    dir.create("data/long_data")
+  }
+  
+  for (iso in country_cdes$iso3) {
     
-    data <- merged_data[[iso]] # Get the data for a country
+    data <- readRDS(paste0("data/wide_data/", iso, ".rds")) # Get the data for a country
     data$case_id <- paste(data$surveyid, data$case_id, sep="_") # Make case_id unique
     
     # Add rows for each year between birth_y+13 and birth_y+17
@@ -30,7 +36,7 @@ create_long_data <- function(merged_data) {
       # Sort the data by case_id and year
       arrange(case_id, year)
     
-    # Finally, remove rows where people are already married
+    # Remove rows where people are already married
     final_data <- merge_dat %>%
       filter(!is.na(married)) %>% # Remove those with missing marriage status
       group_by(case_id) %>%
@@ -50,10 +56,7 @@ create_long_data <- function(merged_data) {
       # Remove any observations with 0 wt
       filter(wt!=0)
     
-    # Add data to list
-    dat_list[[iso]] <- final_data
+    # Save long data
+    saveRDS(final_data, file=paste0("data/long_data/", iso, ".rds"))
   }
-  
-  # Return the list of dataframes
-  dat_list
 }

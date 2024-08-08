@@ -22,15 +22,11 @@ mics_data = clean_mics()
 mics_data_imp = pblapply(mics_data, impute_mics)
 
 # Download and clean DHS surveys
-dhs_data <- clean_dhs(surveys="all", download=TRUE, config)
+dhs_data <- clean_dhs(surveys="all", download=FALSE, config)
 
 # Merge datasets for each country
-merged_data <- merge_data(dhs_data, mics_data_imp)
-save(merged_data, file = "data/clean_data_merged.RData")
+merge_data(dhs_data, mics_data_imp)
 
 # Create long datasets
-long_data <- create_long_data(merged_data)
-save(long_data, file = "data/clean_data_long.RData")
-
-
+create_long_data()
 

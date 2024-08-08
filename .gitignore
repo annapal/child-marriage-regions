@@ -3,6 +3,7 @@
 .Ruserdata
 .DS_Store
 *.Rdata
+*.rds
 data/mics/*
 data/dhs/*
 data/gadm/*

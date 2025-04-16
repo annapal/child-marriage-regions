@@ -3,7 +3,7 @@ This repo collates and cleans child marriage data across DHS and MICS surveys (a
 Where possible, the data has been linked to geographic administrative boundaries listed in the Global Administrative Areas Database (https://gadm.org/) at the first and second administrative division.
 
 The code was developed to clean data for the following papers:
-- paper1
+- Palmer, A.Y., Masuda, Y.J., Harou, A.P., Greene, M.E., Das, J.K., Bawah, A.A., Kwauk, C.T., MacDonald, G.K., Robinson, B.E., Baumgartner, J. and Koski, A. (2025) “The effect of drought on the rate of child marriage in 61 countries,” (Under Review).
 
 ## Code organisation
 - `child-marriage-regions.Rproj` is the project file.
